@@ -6,7 +6,7 @@ import { sendSMS } from './services/africastalkingService'; // Correct named imp
 require('dotenv').config();
 
 const app = express();
-const port = 4001;
+const port = 4000;
 
 // Utility function to strip HTML tags
 const stripHtml = (html: string): string => {
