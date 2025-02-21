@@ -6,7 +6,9 @@ import { sendSMS } from './services/africastalkingService'; // Correct named imp
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
+
+
 
 // Utility function to strip HTML tags
 const stripHtml = (html: string): string => {
@@ -49,8 +51,8 @@ const webhookHandler: RequestHandler = async (req: Request, res: Response): Prom
   let phone_number = '';
   for (const setting of settings) {
     if (setting.label === 'Phone number') {
-      phone_number = setting.default as string; // Cast to string to make sure it's correct
-      break; // Stop once the phone number is found
+      phone_number = setting.default as string; 
+      break; 
     }
   }
 
@@ -76,6 +78,6 @@ const webhookHandler: RequestHandler = async (req: Request, res: Response): Prom
 app.post("/sms-webhook", webhookHandler); // Use the handler
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Express is listening at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`🚀 Express server is running on port ${port}`);
 });
