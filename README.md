@@ -133,7 +133,7 @@ curl -X POST \
 
 | Integration Settings | SMS Command Usage | Health Check Endpoint | Webhook Integration |
 |-----------------------|-------------------|------------------------|---------------------|
-| ![Integration Settings](link-to-settings-screenshot.png) | ![SMS Command](link-to-command-screenshot.png) | ![Health Check](link-to-health-check-screenshot.png) | ![Webhook Integration](link-to-webhook-screenshot.png) |
+| ![Integration Settings](https://res.cloudinary.com/dhspwfrlk/image/upload/v1740263461/xyswpuemktudd9hbp2uh.png) | ![SMS Command](https://res.cloudinary.com/dhspwfrlk/image/upload/v1740263469/mmanwazwshi3xak0hnbx.png) | ![Server Logs](https://res.cloudinary.com/dhspwfrlk/image/upload/v1740263365/taap3i96nmckspd8td05.png) | ![Message Recieved](https://res.cloudinary.com/dhspwfrlk/image/upload/v1740263478/kbwnnx29yy7o6i9os3oo.png) |
 
 ---
 
