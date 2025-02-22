@@ -6,7 +6,7 @@ export const integrationSpecSettings = {
     },
     descriptions: {
       app_description: "An application that enables you to recieve TELEX notifications through your phone SMS.",
-      app_logo: "https://iili.io/3lZ7ta.png",
+      app_logo: "https://res.cloudinary.com/dhspwfrlk/image/upload/v1740242267/l8qhhnzdcluzkoq3xysa.webp",
       app_name: "SMS notifier",
       app_url: "https://l1j5w3jg-4001.uks1.devtunnels.ms",
       background_color: "#FFFFFF",
@@ -14,6 +14,7 @@ export const integrationSpecSettings = {
     integration_category: "Communication & Collaboration",
     integration_type: "output",
     is_active: true,
+    Author: "Emmanuel Muogbo",
     output: [
       {
         label: "marketing-updates",
@@ -21,18 +22,27 @@ export const integrationSpecSettings = {
       },
     ],
     key_features: [
-      "Messages are sent to phone number",
+      "Messages about product updates can be sent to customers via SMS.",
       "Customizable recipient phone numbers for targeted notifications.",
       "Seamless integration with Africa’s Talking API for reliable SMS delivery.",
       "Stay informed even when offline—never miss important updates.",
+      "Simple setup and configuration for easy use.",
+      "Three easy ways to get started: pick a specific output channel from the output section, put in your username(optional) and the phone numbers you  wanna send a message to in this format (+25470******, +23470******6), go to the channel and send in this format: /SMS <message>.",
     ],
     permissions: {},
     settings: [
       {
-        label: "Phone number",
-        type: "number",
-        description: "Phone number to send text to",
-        default: 0,
+        label: "Phone numbers",
+        type: "text",
+        description: "Comma-separated phone numbers (e.g., +254711XXXYYY, +254733YYYZZZ)",
+        default: "",
+        required: true,
+      },
+      {
+        label: "Username",
+        type: "text",
+        description: "Your username to include in messages",
+        default: "",
         required: true,
       },
     ],
@@ -42,6 +52,7 @@ export const integrationSpecSettings = {
         method: "POST",
         description: "Receives channel messages and stores them for context",
       },
+      
 
     ],
     target_url: "https://l1j5w3jg-4001.uks1.devtunnels.ms/sms-webhook",

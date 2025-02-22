@@ -27,49 +27,58 @@ app.get("/integration-spec", (req, res) => {
   res.json(integrationSpecSettings);
 });
 
-// Endpoint: /webhook - Receives channel messages and stores them for context
 const webhookHandler: RequestHandler = async (req: Request, res: Response): Promise<void> => {
-  const { message, settings } = req.body; // Extract message and sender info
-  console.log("Received message on webhook:", req.body);
-  
+  const { message, settings } = req.body;
+  console.log("Received message:", req.body);
+
   if (!message) {
-    res.status(400).send('Message is required'); // Send response directly, no return
-    return; // Exit early after sending the response
-  }
-
-  // Strip HTML tags from the message
-  const plainMessage = stripHtml(message);
-  console.log('Stripped message:', plainMessage);
-
-  // Format the SMS message to include channel and sender
-  const formattedMessage = `${plainMessage}`;
-  console.log('Formatted message to send:', formattedMessage);
-
-  // Extract phone number from settings
-  let phone_number = '';
-  for (const setting of settings) {
-    if (setting.label === 'Phone number') {
-      phone_number = setting.default as string; // Cast to string to make sure it's correct
-      break; // Stop once the phone number is found
-    }
-  }
-
-  if (!phone_number) {
-    console.log('Phone number not found in settings');
-    res.status(400).send('Phone number not found in settings'); // Send response directly if no phone number is found
+    res.status(400).send('Message required');
     return;
   }
 
-  console.log('Sending SMS to phone number:', phone_number);
+  // Extract settings
+  let phoneNumbers: string[] = [];
+  let username = '';
+  settings.forEach((setting: { label: string; default: string }) => {
+    if (setting.label === 'Phone numbers') {
+      phoneNumbers = setting.default.split(',').map(num => num.trim());
+    } else if (setting.label === 'Username') {
+      username = setting.default;
+    }
+  });
 
+  // Validate settings
+  if (phoneNumbers.length === 0) {
+    res.status(400).send('No phone numbers configured');
+    return;
+  }
+
+  // Process message
+  const plainMessage = stripHtml(message);
+  
+  // Check for /SMS command
+  if (!plainMessage.startsWith('/SMS')) {
+    res.status(200).send('Ignored - no /SMS command');
+    return;
+  }
+
+  // Remove command and format
+  const cleanMessage = plainMessage.replace(/^\/SMS\s*/, '');
+  let formattedMessage: string;
+  
+  if (!username) {
+    formattedMessage = cleanMessage;
+  } else {
+    formattedMessage = `${username}: ${cleanMessage}`;
+  }
+
+  // Send SMS
   try {
-    // Send SMS using the correct service
-    await sendSMS(phone_number, formattedMessage);  // Use the correct named import here
-
-    res.status(200).send('Message sent'); // Send response directly
+    await sendSMS(phoneNumbers, formattedMessage);
+    res.status(200).send('Message sent to all numbers');
   } catch (error) {
-    console.error("Error with Africa's Talking API:", error);
-    res.status(500).send('Error sending SMS'); // Send response directly
+    console.error("SMS Error:", error);
+    res.status(500).send('Error sending messages');
   }
 };
 

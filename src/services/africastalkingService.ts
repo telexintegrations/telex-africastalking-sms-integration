@@ -3,15 +3,15 @@ import qs from 'qs';
 
 
 
-const sendSMS = async (phone_number: string, message: string): Promise<any> => {
+const sendSMS = async (phoneNumbers: string[], message: string): Promise<any> => {
   try {
-    console.log('Sending SMS to:', phone_number);
+    console.log('Sending SMS to:', phoneNumbers);
 
     const response: AxiosResponse = await axios.post(
       'https://api.sandbox.africastalking.com/version1/messaging',
       qs.stringify({
         username: 'sandbox',  // Replace with your Africa’s Talking username
-        to: phone_number,
+        to: phoneNumbers.join(','),
         message,
         from: process.env.AFRICAS_TALKING_SENDER_ID,
       }),
