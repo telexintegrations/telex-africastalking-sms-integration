@@ -1,111 +1,158 @@
-# Telex SMS Integration
 
-[![Node.js](https://img.shields.io/badge/Node.js-18.x+-green)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue)](https://typescriptlang.org/)
-[![Africa's Talking](https://img.shields.io/badge/Africa's%20Talking-API-orange)](https://africastalking.com/)
+# Telex + Africa's Talking SMS Integration
 
-A Node.js application that integrates Telex messaging with Africa's Talking SMS API to enable SMS notifications triggered by webhook events.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
 
-## Features
+A seamless integration between the **Telex chat platform** and **Africa's Talking SMS API**, enabling SMS messaging directly from Telex channels.
 
--
-## Prerequisites
+---
 
-- Node.js 18.x+
-- npm 9.x+
-- Africa's Talking API account (Sandbox or Live)
-- Telex.im account with webhook permissions
-- Server/domain for webhook endpoint
+## 📌 Features
 
+- **/SMS Command** - Send messages via SMS with `/SMS [message]` command.
+- **HTML Stripping** - Automatic sanitization of HTML content.
+- **Multi-Number Support** - Send to multiple phone numbers simultaneously.
+- **Webhook Integration** - REST API endpoint for Telex integration.
+- **CORS Security** - Whitelisted origins with proper headers.
 
+---
 
-## :rocket: Quick Start
+## 🚀 Quick Start
 
-1. Clone repo:
-   git clone https://github.com/yourusername/telex-sms-integration.git
+### Prerequisites
 
-2. Install packages:
-   cd telex-sms-integration
+- Node.js 18+
+- Africa's Talking API credentials
+- Telex channel admin access
+
+### Local Development
+
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/your-username/telex-africastalking-sms-integration.git
+   cd telex-africastalking-sms-integration
+   ```
+
+2. **Install dependencies**
+   ```bash
    npm install
+   ```
 
-3. Create .env file:
+3. **Environment setup**
+   ```bash
+   cp .env.example .env
+   ```
+   Update `.env` with your credentials:
+   ```ini
    AFRICASTALKING_API_KEY=your_api_key
-   AFRICAS_TALKING_SENDER_ID=TELEX
-   AFRICAS_TALKING_USERNAME=sandbox
-   PORT=4001
-   CORS_ORIGIN=https://telex.im
+   AFRICASTALKING_USERNAME=your_username
+   PORT=4000
+   NODE_ENV=development
+   ```
 
-4. Start server:
+4. **Start server**
+   ```bash
    npm run dev
+   ```
 
-## :triangular_flag_on_post: Key Features
+---
 
-- /SMS command detection and auto-removal
-- Multiple recipient support (+254700000001,+254700000002)
-- HTML sanitization
-- Sandbox/Live mode switching
-- Error logging
-- CORS protection
+## 🌍 Production Deployment (Render)
 
-## :link: Webhook Configuration in Telex
+1. **Create new Web Service** on Render Dashboard.
+2. **Connect your GitHub repository**.
+3. Set environment variables:
+   ![Render Environment Variables](https://assets-global.website-files.com/5f1a53d…5f3f.png)
 
-1. Set Webhook URL to:
-   https://your-domain.com/sms-webhook
+4. Configure build settings:
+   ```yaml
+   Build Command: npm install && npm run build
+   Start Command: npm start
+   ```
 
-2. Required Settings:
-   - Phone Numbers (Comma-separated)
-   - Username (Optional)
+5. Select **Web Service** type with the following specs:
+   - Instance Type: Starter
+   - Region: Closest to your users
+   - Auto-Deploy: On Git push
 
-## :test_tube: Testing Flow
+---
 
-1. Send Telex message:
-   /SMS This is a test message
+## 🔧 Telex Configuration
 
-2. Server processes:
-   - Removes /SMS command
-   - Validates numbers
-   - Sends via Africa's Talking
+1. In Telex admin panel:
+   - Integration Type: **Custom Webhook**
+   - Webhook URL: `https://your-render-service.onrender.com/sms-webhook`
+   - Allowed IPs: `0.0.0.0/0` (Render IP ranges)
 
-3. Check console for:
-   - Received messages
-   - API responses
-   - Error logs
+2. Add required settings in Telex:
+   ```yaml
+   - label: "Phone numbers"
+     type: string
+     required: true
+     default: "+2547XXXXXXXX,+2547XXXXXXXX"
 
-## :cloud: Deployment
+   - label: "Username"
+     type: string
+     required: false
+     default: "Telex User"
+   ```
 
-For AWS EB:
-1. Zip project (exclude node_modules)
-2. Create Node.js environment
-3. Set env variables in AWS Console
+---
 
-For EC2:
-1. Install Node.js, PM2, Nginx
-2. Clone repo
-3. npm install --production
-4. Configure Nginx proxy
-5. pm2 start src/app.ts
+## 🧪 Testing
 
-## :warning: Important Notes
+### Endpoints
 
-- Sandbox requires +254700XXX numbers
-- Live mode needs approved sender ID
-- SMS costs apply in live mode
-- Keep API keys secure
-- Monitor usage limits
+```bash
+# Health check
+curl https://your-render-service.onrender.com
 
-## Contributing
-Fork the repository
+# Integration spec
+curl https://your-render-service.onrender.com/integration-spec
 
-Create feature branch: git checkout -b feature/new-feature
+# Webhook test (replace with actual values)
+curl -X POST \
+  https://your-render-service.onrender.com/sms-webhook \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "/SMS This is a test message",
+    "settings": [
+      {
+        "label": "Phone numbers",
+        "default": "+254712345678"
+      },
+      {
+        "label": "Username", 
+        "default": "Telex Test"
+      }
+    ]
+  }'
+```
 
-Commit changes: git commit -m 'Add new feature'
+### Telex Channel Screenshots
 
-Push to branch: git push origin feature/new-feature
+| Integration Settings | SMS Command Usage | Health Check Endpoint | Webhook Integration |
+|-----------------------|-------------------|------------------------|---------------------|
+| ![Integration Settings](link-to-settings-screenshot.png) | ![SMS Command](link-to-command-screenshot.png) | ![Health Check](link-to-health-check-screenshot.png) | ![Webhook Integration](link-to-webhook-screenshot.png) |
 
-Submit pull request
+---
 
-## License
-MIT License
+## ⚙️ Environment Variables
+
+| Variable                  | Required | Default       | Description                              |
+|---------------------------|----------|---------------|------------------------------------------|
+| `AFRICASTALKING_API_KEY`  | Yes      | -             | API key from Africa's Talking           |
+| `AFRICASTALKING_USERNAME` | Yes      | -             | Africa's Talking username                |
+| `PORT`                    | No       | 4000          | Server port                              |
+| `NODE_ENV`                | No       | development   | Runtime environment                      |
+
+---
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details.
+
+
 
 ## :e-mail: Support
 
