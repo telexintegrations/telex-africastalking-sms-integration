@@ -67,7 +67,7 @@ A seamless integration between the **Telex chat platform** and **Africa's Talkin
 4. Configure build settings:
    ```yaml
    Build Command: npm install && npm run build
-   Start Command: npm start
+   Start Command: npm run dev
    ```
 
 5. Select **Web Service** type with the following specs:
