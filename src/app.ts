@@ -1,11 +1,11 @@
-import express, { Request, Response, RequestHandler } from 'express';
+import express, { Request, Response, Application, RequestHandler } from 'express';
 import cors from 'cors';
 import { integrationSpecSettings } from './integrationSpec';
 import { sendSMS } from './services/africastalkingService';
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port: number | string = process.env.PORT || 4000;
 
 // Utility function to strip HTML tags
 const stripHtml = (html: string): string => {
@@ -15,8 +15,12 @@ const stripHtml = (html: string): string => {
 app.use(cors({ origin: 'https://telex.im' }));
 app.use(express.json());
 
-app.get('/', (req, res) => res.send('Hello World!'));
-app.get("/integration-spec", (req, res) => res.json(integrationSpecSettings));
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hello World!');
+});
+app.get("/integration-spec", (req: Request, res: Response) => {
+  res.json(integrationSpecSettings);
+});
 
 const webhookHandler: RequestHandler = async (req: Request, res: Response) => {
   const { message, settings } = req.body;
@@ -65,6 +69,6 @@ const webhookHandler: RequestHandler = async (req: Request, res: Response) => {
 
 app.post("/sms-webhook", webhookHandler);
 
-app.listen(port, '0.0.0.0', () => {
+app.listen(Number(port), '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${port}`);
 });
