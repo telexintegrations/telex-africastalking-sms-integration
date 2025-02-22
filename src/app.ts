@@ -7,6 +7,25 @@ require('dotenv').config();
 const app = express();
 const port: number | string = process.env.PORT || 4000;
 
+const corsOptions = {
+  origin: [
+    'https://telex.im',
+    'https://www.telex.im',
+    process.env.NODE_ENV === 'development' && 'http://localhost:3000'
+  ].filter(Boolean),
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'Accept'
+  ],
+  credentials: true,
+  optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+
 // Utility function to strip HTML tags
 const stripHtml = (html: string): string => {
   return html.replace(/<[^>]*>/g, '');
