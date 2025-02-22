@@ -6,7 +6,9 @@ import { sendSMS } from './services/africastalkingService'; // Correct named imp
 require('dotenv').config();
 
 const app = express();
-const port = 4001;
+const port = process.env.PORT || 4000;
+
+
 
 // Utility function to strip HTML tags
 const stripHtml = (html: string): string => {
@@ -32,7 +34,34 @@ const webhookHandler: RequestHandler = async (req: Request, res: Response): Prom
   console.log("Received message:", req.body);
 
   if (!message) {
+<<<<<<< HEAD
     res.status(400).send('Message required');
+=======
+    res.status(400).send('Message is required'); // Send response directly, no return
+    return; // Exit early after sending the response
+  }
+
+  // Strip HTML tags from the message
+  const plainMessage = stripHtml(message);
+  console.log('Stripped message:', plainMessage);
+
+  // Format the SMS message to include channel and sender
+  const formattedMessage = `${plainMessage}`;
+  console.log('Formatted message to send:', formattedMessage);
+
+  // Extract phone number from settings
+  let phone_number = '';
+  for (const setting of settings) {
+    if (setting.label === 'Phone number') {
+      phone_number = setting.default as string; 
+      break; 
+    }
+  }
+
+  if (!phone_number) {
+    console.log('Phone number not found in settings');
+    res.status(400).send('Phone number not found in settings'); // Send response directly if no phone number is found
+>>>>>>> 89c8026ced572ebe5063db4cda8c2a37a3adf9f5
     return;
   }
 
@@ -85,6 +114,6 @@ const webhookHandler: RequestHandler = async (req: Request, res: Response): Prom
 app.post("/sms-webhook", webhookHandler); // Use the handler
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Express is listening at http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`🚀 Express server is running on port ${port}`);
 });

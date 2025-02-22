@@ -8,7 +8,7 @@ export const integrationSpecSettings = {
       app_description: "An application that enables you to recieve TELEX notifications through your phone SMS.",
       app_logo: "https://res.cloudinary.com/dhspwfrlk/image/upload/v1740242267/l8qhhnzdcluzkoq3xysa.webp",
       app_name: "SMS notifier",
-      app_url: "https://l1j5w3jg-4001.uks1.devtunnels.ms",
+      app_url: "https://telex-africastalking-sms-integration.onrender.com",
       background_color: "#FFFFFF",
     },
     integration_category: "Communication & Collaboration",
@@ -55,6 +55,6 @@ export const integrationSpecSettings = {
       
 
     ],
-    target_url: "https://l1j5w3jg-4001.uks1.devtunnels.ms/sms-webhook",
+    target_url: "https://telex-africastalking-sms-integration.onrender.com/sms-webhook",
   },
 };
