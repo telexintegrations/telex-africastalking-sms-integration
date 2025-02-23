@@ -1,4 +1,6 @@
 import express, { Request, Response, Application, RequestHandler } from 'express';
+import fs from 'fs';
+import path from 'path';
 import cors from 'cors';
 import { integrationSpecSettings } from './integrationSpec';
 import { sendSMS } from './services/africastalkingService';
@@ -35,8 +37,17 @@ app.use(cors({ origin: 'https://telex.im' }));
 app.use(express.json());
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+ 
+  const filePath = path.join(__dirname, './docs.html');
+
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      return res.status(500).send('Error reading the document');
+    }
+    res.send(data); 
+  });
 });
+
 app.get("/integration-spec", (req: Request, res: Response) => {
   res.json(integrationSpecSettings);
 });
