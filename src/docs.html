@@ -47,26 +47,26 @@
 <body>
 
     <h1>Documentation: Testing SMS Notifier Integration (Telex ↔ Africa’s Talking)</h1>
-    <p><strong>Last Updated:</strong> [Insert Date]</p>
+    <p><strong>Last Updated:</strong> 23/02/2025</p>
 
     <h2>Objective</h2>
-    <p>This document outlines the steps to test the integration between <strong>Telex</strong> and <strong>Africa’s Talking (AT)</strong> via their sandbox environment. The goal is to ensure SMS notifications triggered in Telex are successfully delivered through Africa’s Talking’s API. Now, the processes below were used because using live numbers would be charged, and I requested the Africa’s Talking team provide an alphanumeric for the live account but they are yet to respond. So the test would only work in their provided testing environment.</p>
+    <p>This document outlines the steps to test the integration between <strong>Telex</strong> and <strong>Africa’s Talking (AT)</strong> via their sandbox environment. The goal is to ensure SMS notifications triggered in Telex are successfully delivered through Africa’s Talking’s API. Now, the processes below were used because using live numbers would be a charged service, and I requested the Africa’s Talking team provide an alphanumeric for the live account but they are yet to respond. So this test would only work in their provided testing environment.</p>
 
     <h2>Prerequisites</h2>
     <ul>
-        <li><strong>Sandbox Access:</strong>
+        <li><strong>Sandbox Access via my personal account:</strong>
             <ul>
                 <li>Email: eimuogbo@gmail.com</li>
                 <li>Password: HNG12-AFRICASTALKING</li>
             </ul>
         </li>
-        <li><strong>Telex Environment:</strong> Configured to send outbound messages via API. This is provided in submission form.</li>
-        <li><strong>Test Phone Numbers:</strong> At least 2 numbers (sender and recipient) in international format (e.g., +2348123456789, +25475444441). These can be any random numbers as long as they are in the sandbox testing phone and the Telex channel settings; this would work.</li>
+        <li><strong>Telex Channel:</strong> Configured to send outbound messages via API. The link to my channel is provided in submission form.</li>
+        <li><strong>Test Phone Numbers:</strong> youcan use two or more numbers but it must be in international format (e.g., +2348123456789, +25475444441). These can be any random numbers as long as the number you chose was an input in the app integration settings, and the same number is also   in the sandbox testing phone for preview ; this would work.</li>
     </ul>
 
     <h2>Setup Steps</h2>
     <h3>1. Log into Africa’s Talking Sandbox</h3>
-    <p>Go to <a href="https://africastalking.com/">Africa’s Talking</a> → Login. Use the sandbox credentials above. Navigate to the Dashboard → Sandbox tab.</p>
+    <p>Go to <a href="https://africastalking.com/">Africa’s Talking</a> → Login. Use the credentials above to access africastalking. Navigate to the Dashboard → Sandbox tab.</p>
 
     <h3>2. Click on the simulator you see by the sidebar.</h3>
 
@@ -75,14 +75,14 @@
 
     <h2>Testing Workflow</h2>
     <h3>1. Send a Test SMS via Telex</h3>
-    <p>In the settings of the SMS notifier in Telex, input your phone numbers that were in the sandbox, in this format:</p>
+    <p>In the settings of the SMS notifier in Telex, input your phone numbers that was in the sandbox, in this format:</p>
     <div class="code">+23470***********, +25490*********</div>
-    <p>Then go send an SMS in this format: /SMS &lt;message&gt;</p>
+    <p>Then go send an SMS in this format in the SMS notifier channel: /SMS &lt;message&gt;</p>
     <div class="code">1. /SMS All teams should gather for a meeting</div>
     <div class="code">2. /SMS Your product is ready, kindly pick them up</div>
 
     <h3>2. Verify Delivery in Africa’s Talking Sandbox</h3>
-    <p>Go to the Africa’s Talking dashboard → SANDBOX → SIMULATOR. Check if the test message appears.</p>
+    <p> All through your testing ensure the tab opened for the simulator isn't inactive. Go to the Africa’s Talking dashboard → SANDBOX → SIMULATOR. Check if the test message appears.</p>
 
     <h3>3. Confirm Recipient Receives SMS</h3>
     <p>Ensure the recipient’s phone receives the message. Note: In sandbox mode, messages are simulated.</p>
@@ -115,7 +115,7 @@
         <li>Update API endpoints (remove `sandbox.` from URLs).</li>
     </ul>
 
-    <p><strong>Let me know if you hit blockers!</strong></p>
+    <p><strong>Let me know if you hit blockers! Refer to Readme for more clarity</strong></p>
     <p><strong>MUOGBO EMMANUEL</strong> [Slack: Nuel_MD]</p>
     <p>Telex Integration Team</p>
 
